@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="suifeng.spring_demo.mapper.UserMapper">
+
+    <cache eviction="LRU" flushInterval="100000" readOnly="true" size="1024"/>
+    <select id="findById" resultType="User">
+        select * from user where id = #{user_id}
+    </select>
+    
+    <insert id="save" parameterType="User">
+        INSERT INTO user (name, pwd, head_img, phone, create_time)
+            values (#{name},#{pwd},#{headImg},#{phone},#{createTime})
+    </insert>
+
+
+
+
+</mapper>
