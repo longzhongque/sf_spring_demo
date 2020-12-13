@@ -1,17 +1,17 @@
 package suifeng.spring_demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.ibatis.annotations.CacheNamespace;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
-@CacheNamespace
-public class User implements Serializable {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class User {
     /**
      * CREATE TABLE `onine_xdclass`.`Untitled`  (
      *   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -27,6 +27,7 @@ public class User implements Serializable {
 
     private int id;
     private String name;
+    @JsonIgnore
     private String pwd;
     private String headImg;
     private String phone;
@@ -39,9 +40,10 @@ public class User implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", pwd='" + pwd + '\'' +
-                ", head_img='" + headImg + '\'' +
+                ", headImg='" + headImg + '\'' +
                 ", phone='" + phone + '\'' +
                 ", createTime=" + createTime +
+                ", videoOrders=" + videoOrders +
                 '}';
     }
 }

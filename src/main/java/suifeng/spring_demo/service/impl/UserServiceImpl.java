@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import suifeng.spring_demo.mapper.UserMapper;
 import suifeng.spring_demo.model.entity.User;
 import suifeng.spring_demo.service.UserService;
+import suifeng.spring_demo.utils.JWTUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -48,6 +49,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> listUserOrder() {
         return null;
+    }
+
+    @Override
+    public User queryUserOrder(int id) {
+        User userList = userMapper.queryUserOrder(id);
+        return userList;
+    }
+
+    @Override
+    public String findByPhonePwd(String phone, String pwd) {
+        User user = userMapper.findByPhonePwd(phone,pwd);
+        if(user == null){
+            return null;
+        }else {
+            String token = JWTUtils.geneJsonWebToken(user);
+            return token ;
+        }
     }
 
     /**

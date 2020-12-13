@@ -30,7 +30,13 @@ public interface UserService {
      */
     List<User> listUser();
     /**
-     * 关联查询
+     * 关联查询 根据orderid查询
      */
     List<User> listUserOrder();
+    /**
+     * 查询所有用户的全部信息
+     */
+    User queryUserOrder(int id);
+
+    String findByPhonePwd(String phone, String pwd);
 }

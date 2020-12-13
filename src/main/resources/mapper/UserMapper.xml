@@ -2,9 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="suifeng.spring_demo.mapper.UserMapper">
 
-    <cache eviction="LRU" flushInterval="100000" readOnly="true" size="1024"/>
+<!--    <cache eviction="LRU" flushInterval="100000" readOnly="true" size="1024"/>-->
+
+    <resultMap id="UserOrderResultMap" type="User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="head_img" property="headImg"/>
+        <result column="create_time" property="createTime"/>
+        <result column="phone" property="phone"/>
+
+        <collection property="videoOrders" ofType="VideoOrder">
+            <id column="id" property="id"/>
+            <result column="out_trade_no" property="outTradeNo"/>
+            <result column="create_time" property="createTime"/>
+            <result column="state" property="state"/>
+            <result column="total_fee" property="totalFee"/>
+            <result column="video_id" property="videoId"/>
+            <result column="video_title" property="videoTitle"/>
+            <result column="video_img" property="videoImg"/>
+            <result column="user_id" property="userId"/>
+        </collection>
+    </resultMap>
     <select id="findById" resultType="User">
         select * from user where id = #{user_id}
+    </select>
+
+<!--    登录-->
+    <select id="findByPhonePwd" resultType="User">
+        select * from user where phone = #{phone} and pwd = #{pwd}
+    </select>
+
+    <select id="queryUserOrder" resultMap="UserOrderResultMap">
+        select
+        u.id,
+        u.name,
+        u.head_img,
+        u.create_time,
+        u.phone,
+        o.id ,
+        o.out_trade_no,
+        o.create_time,
+        o.state,
+        o.total_fee,
+        o.video_id,
+        o.video_title,
+        o.video_img,
+        o.user_id
+        from user u left join video_order o on u.id = o.user_id
+        where u.id = #{user_id}
     </select>
     
     <insert id="save" parameterType="User">
